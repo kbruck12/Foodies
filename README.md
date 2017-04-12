@@ -46,3 +46,4 @@ Main View (./views/store/index)
 -------
 Contains the angular code used to access the data and call controller functions including seeing all stores, their item catalog, sorting the catalog, and searching for items. 
 
+# foodies
