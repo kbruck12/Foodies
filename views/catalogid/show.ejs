@@ -1,0 +1,21 @@
+<div class='conatiner'>
+  <h1>  Food Catalog </h1>
+
+  <table class='table'>
+   <tr>
+      <th> Item ID</th>
+      <th> Price</th>
+      <th> Location </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      </tr>
+      <% _.each(catalog, function(catalog){ %>
+         <tr data-id="<%= catalog.CatalogNo %>" data-model="catalog">
+         <td><%= catalog.ItemID %></td>
+         <td><%= catalog.Location%></td>
+         <td><%= catalog.Price%></td>
+      <% }) %>
+
+
+ </table>

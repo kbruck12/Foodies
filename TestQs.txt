@@ -1,0 +1,6 @@
+Sql Test Q's
+
+
+SELECT `Name`,`Price`,`Location` FROM `Items`,`Locations` WHERE `Locations`.`CatalogNo` = 1 AND `Items`.`ItemID` = `Locations`.`ItemID`;
+
+

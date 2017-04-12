@@ -1,0 +1,75 @@
+<div class="container" ng-app="myApp" ng-controller="myCtrl as Main">
+   <h3> Stores </h3>
+   <input type="text" ng-model="Main.name" /> {{Main.name}} <span ng-bind="Main.name"></span>
+   <table class='table'>
+      <tr>
+         <th ng-click="Main.storeSort='StoreName'; Main.storeSortDescending = !Main.storeSortDescending;"> Store Name </th>
+         <th ng-click="Main.storeSort='ZipCode'; Main.storeSortDescending = !Main.storeSortDescending;"> Zipcode </th>
+         <th ng-click="Main.storeSort='Address'; Main.storeSortDescending = !Main.storeSortDescending;"> Address </th>
+         <th> </th>
+         <th> </th>
+         <th> </th>
+         <th> </th>
+      </tr>
+      <tbody>
+         <tr ng-repeat="store in Main.stores | orderBy:Main.storeSort:Main.storeSortDescending">
+            <td ng-bind="store.StoreName"></td>
+            <td ng-bind="store.ZipCode"></td>
+            <td ng-bind="store.Address"></td>
+            <!-- <td><a href="/store/show/{{store.StoreNo}}" class="btn-sm btn-primary">See Store Catalog</a></td> -->
+            <td><a ng-click="Main.getStoreCatalog(store.StoreNo);" class="btn-sm btn-primary">See Store Catalog</a></td>
+         </tr>
+      </tbody>   
+   </table>
+   <h3 ng-if="Main.currentStore.storeNumber">Listing Items for store #{{Main.currentStore.storeNumber}}</h3>
+   <input type="text" placeholder="filter items..." ng-model="Main.itemsFilter" />
+   Sort By: <label ng-repeat="option in Main.itemSortOptions">{{option}} <input type="radio" ng-model="Main.itemSort"  value="{{option}}"/></label>
+   <div ng-repeat="item in Main.currentStore.items | orderBy:Main.itemSort | filter:Main.itemsFilter">
+      Name: {{item.name}}<br>
+      Location: {{item.location}}<br>
+      Price: {{item.price | currency}}<br>
+      Type: {{item.type}}<br>
+      <hr/>
+   </div>
+</div>
+<script type="text/javascript"> 
+var app = angular.module("myApp", []);
+app.value("stores", <%- JSON.stringify(store) %>);
+app.controller("myCtrl", function ($http, $scope, stores){ 
+   var $this = this; 
+   $this.name ="";   
+   $this.stores = stores;
+   $this.currentStore = {};
+   $this.getStoreCatalog = function (storeNumber) {
+      $http({
+         //url: "/store/show/" + storeNumber,
+         url: "/store/getStoreCatalog",
+         method: "GET",
+         params: {
+            storeNumber: storeNumber
+         }
+      }).then(function successCallback (response) {
+         // success code goes here
+         $this.currentStore.storeNumber = storeNumber;
+         $this.currentStore.items = response.data.items.map(function (item) {
+            var catalog = null;
+            response.data.catalogs.some(function (_catalog) {
+               if (_catalog.ItemID === item.ItemNo) {
+                  catalog = _catalog;
+                  return true;
+               }
+            });
+            return {
+               location: catalog ? catalog.Location : "",
+               price: catalog ? catalog.Price : "",
+               name: item.Name,
+               type: item.Type
+            }
+         });
+         $this.itemSortOptions = Object.keys($this.currentStore.items[0]);
+      }, function failureCallback () {
+         // error code goes here
+      });
+   };
+ }); 
+</script>

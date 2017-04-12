@@ -1,0 +1,22 @@
+<div class="container">
+ <h3> Store Search Result </h3>
+ <table class='table'>
+   <tr>
+      <th> Store Name </th>
+      <th> Zipcode </th>
+      <th> Address </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      </tr>
+
+      <% _.each(store, function(store){ %>
+         <tr data-id="<%= store.StoreID %>" data-model="store">
+         <td><%= store.StoreName %></td>
+         <td><%= store.ZipCode%></td>
+         <td><%= store.Address %></td>
+         <td><a href="/store/show/<%= Store.StoreID %>" class="btn-sm btn-primary">Show Store</a></td>
+      <% }) %>
+      </table>
+   </div

@@ -1,0 +1,21 @@
+<div class="container">
+ <h3> Item Index </h3>
+ <table class='table'>
+   <tr>
+      <th> Item ID </th>
+      <th> Name </th>
+      <th> Type </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      </tr>
+
+      <% _.each(item, function(item){ %>
+         <tr data-id="<%= item.ItemNo %>" data-model="item">
+         <td><%= item.ItemNo %></td>
+         <td><%= item.Name%></td>
+         <td><%= item.Type%></td>
+      <% }) %>
+      </table>
+   </div
