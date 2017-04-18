@@ -1,11 +1,4 @@
-<div class="container" ng-app="myApp" ng-controller="StoreController as Main">
-   <h3> Search a store location </h3>
-   <input type="text" ng-model="Main.name" /> {{Main.name}} <span ng-bind="Main.name"></span>
+<div class="container">
+    <ui-view></ui-view>
 </div>
-<script>
-    var app = angular.module("myApp", [])
-    .controller('StoreController', function () {
-        var $this = this;
-        $this.name = "Bob Jones";
-    });
-</script>
+
