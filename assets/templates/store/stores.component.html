@@ -2,27 +2,33 @@
     .results {
         padding: 10px;
     }
+    .thumbnail {
+        height: 450px;
+    }
 </style>
 <h3> Search a store location </h3>
 
 
 <div class="row">
-  <div class="col-lg-3">
-    <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search for..." ng-model="$ctrl.searchValue">
-            <span class="input-group-btn">
-            <button class="btn btn-primary" type="button" ng-click="$ctrl.search();">Search</button>
-        </span>
-    </div>
-  </div>
+    <form ng-submit="$ctrl.search();">
+        <div class="col-lg-3">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for..." ng-model="$ctrl.searchValue">
+                    <span class="input-group-btn">
+                    <input value="Search" class="btn btn-primary" type="submit" />
+                </span>
+            </div>
+        </div>
+    </form>
+
 </div>
 <div class="results">
     <div class="row">
         <div class="col-sm-6 col-md-4" ng-repeat="store in $ctrl.results">
             <div class="thumbnail">
-                <img src="{{store.picture}}" alt="{{store.company}}">
+                <img ng-src="{{store.picture}}" alt="{{store.name}}">
                 <div class="caption">
-                    <h3>{{store.company}}</h3>
+                    <h3>{{store.name}}</h3>
                     <p>{{store.address}} {{store.city}}, {{store.state}} {{store.zip}}</p>
                     <p>Phone: <a href="tel:{{store.phone}}">{{store.phone}}</a></p>
                     <p>
